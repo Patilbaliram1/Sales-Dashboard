@@ -1,15 +1,12 @@
-from flask import Flask, jsonify 
-
-app = Flask(__name__)
-
-@app.route('/')
-def home():
-    return "Hello! Your Flask app is running successfully."
-
-@app.route('/api/data', methods=['GET'])
-def get_data():
-    sample_data = {"message": "This is a sample API response", "status": "success"}
-    return jsonify(sample_data)
-
-if __name__ == "__main__":
-    app.run(debug=True)
+from flask import Flask, render_template 
+from api.data_routes import data_bp 
+ 
+app = Flask(__name__) 
+app.register_blueprint(data_bp, url_prefix='/api') 
+ 
+@app.route('/') 
+def home(): 
+    return render_template('index.html') 
+ 
+if __name__ == "__main__": 
+    app.run(debug=True) 
